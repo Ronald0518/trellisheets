@@ -85,6 +85,6 @@ Guide](https://trello.com/about/branding#colors) for how we use brand colors.
 3. Add CSS to `src/**/` and import in respective `/src/entries` files.
 4. `./tools/watch`, to build and watch styles
 5. `./tools/serve`, to serve the site
-7. Visit [localhost:8080](http://localhost:8080) to test.
-6. Add to public/index.html or another example page.
+6. Visit [localhost:8080](http://localhost:8080) to test.
+7. Add to public/index.html or another example page.
 8. Make changes in a branch and open a pull request.
