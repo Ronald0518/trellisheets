@@ -1,2 +1,7 @@
 node_modules
 public/styles/*
+
+virtual-desk/node_modules
+virtual-desk/renderer/node_modules
+virtual-desk/renderer/build
+package-lock.json

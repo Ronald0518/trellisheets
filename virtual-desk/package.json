@@ -1,0 +1,22 @@
+{
+  "name": "virtual-desk",
+  "version": "0.1.0",
+  "main": "main.js",
+  "scripts": {
+    "dev": "concurrently \"npm:start --prefix renderer\" \"wait-on http://localhost:3000 && electron .\"",
+    "start": "electron .",
+    "build": "npm run build --prefix renderer && electron-builder",
+    "package": "electron-builder"
+  },
+  "dependencies": {
+    "electron": "^26.2.0",
+    "sqlite3": "^5.1.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.1",
+    "wait-on": "^7.0.1",
+    "electron-builder": "^24.6.0"
+  }
+}
