@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>圖片去背工具</title>
+    <link rel="stylesheet" href="/dist/core.css" />
+    <style>
+      :root {
+        --card: #fff;
+        --line: #dfe1e6;
+      }
+
+      body {
+        background: #f4f5f7;
+      }
+
+      .app {
+        max-width: 960px;
+        margin: 40px auto;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 24px;
+      }
+
+      .controls {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+
+      .canvas-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      canvas {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background-image: linear-gradient(45deg, #eee 25%, transparent 25%),
+          linear-gradient(-45deg, #eee 25%, transparent 25%),
+          linear-gradient(45deg, transparent 75%, #eee 75%),
+          linear-gradient(-45deg, transparent 75%, #eee 75%);
+        background-size: 20px 20px;
+        background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+      }
+
+      .status {
+        margin: 8px 0 16px;
+        color: #5e6c84;
+      }
+
+      @media (max-width: 800px) {
+        .canvas-wrap {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app">
+      <h1>圖片去除背景</h1>
+      <p>上傳含有人像的照片，系統會在瀏覽器內自動去背（不需上傳到伺服器）。</p>
+
+      <div class="controls">
+        <input id="fileInput" type="file" accept="image/*" />
+        <button id="runBtn" class="button button-primary">開始去背</button>
+        <button id="downloadBtn" class="button" disabled>下載 PNG</button>
+      </div>
+
+      <div id="status" class="status">請先選擇圖片。</div>
+
+      <div class="canvas-wrap">
+        <section>
+          <h3>原圖</h3>
+          <canvas id="srcCanvas"></canvas>
+        </section>
+        <section>
+          <h3>去背結果</h3>
+          <canvas id="dstCanvas"></canvas>
+        </section>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js"></script>
+    <script>
+      const fileInput = document.getElementById('fileInput');
+      const runBtn = document.getElementById('runBtn');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const statusEl = document.getElementById('status');
+      const srcCanvas = document.getElementById('srcCanvas');
+      const dstCanvas = document.getElementById('dstCanvas');
+      const srcCtx = srcCanvas.getContext('2d');
+      const dstCtx = dstCanvas.getContext('2d');
+
+      let sourceImage;
+
+      const model = new SelfieSegmentation({
+        locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${file}`,
+      });
+      model.setOptions({ modelSelection: 1 });
+
+      model.onResults((results) => {
+        const { width, height } = sourceImage;
+
+        dstCanvas.width = width;
+        dstCanvas.height = height;
+
+        dstCtx.clearRect(0, 0, width, height);
+        dstCtx.drawImage(results.segmentationMask, 0, 0, width, height);
+
+        dstCtx.globalCompositeOperation = 'source-in';
+        dstCtx.drawImage(sourceImage, 0, 0, width, height);
+        dstCtx.globalCompositeOperation = 'source-over';
+
+        statusEl.textContent = '完成！你可以下載透明背景 PNG。';
+        downloadBtn.disabled = false;
+      });
+
+      fileInput.addEventListener('change', () => {
+        const file = fileInput.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+          const img = new Image();
+          img.onload = () => {
+            sourceImage = img;
+            srcCanvas.width = img.width;
+            srcCanvas.height = img.height;
+            dstCanvas.width = img.width;
+            dstCanvas.height = img.height;
+            srcCtx.drawImage(img, 0, 0);
+            dstCtx.clearRect(0, 0, img.width, img.height);
+            statusEl.textContent = '圖片已載入，點擊「開始去背」。';
+            downloadBtn.disabled = true;
+          };
+          img.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      });
+
+      runBtn.addEventListener('click', async () => {
+        if (!sourceImage) {
+          statusEl.textContent = '請先上傳圖片。';
+          return;
+        }
+
+        statusEl.textContent = '處理中，請稍候...';
+        await model.send({ image: sourceImage });
+      });
+
+      downloadBtn.addEventListener('click', () => {
+        const link = document.createElement('a');
+        link.download = 'removed-background.png';
+        link.href = dstCanvas.toDataURL('image/png');
+        link.click();
+      });
+    </script>
+  </body>
+</html>
