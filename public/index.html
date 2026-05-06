@@ -1,175 +1,241 @@
-<!doctype html>
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1999 市民服務專線訓練教材 - 社會關懷與幸福生活</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif; background-color: #FAFAF9; color: #333; }
+    .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; margin-bottom: 1.5rem; }
+    @media (min-width: 768px) { .chart-container { height: 350px; } }
+    .nav-item.active { background-color: #E7E5E4; font-weight: 600; border-left: 4px solid #78716C; }
+    .tab-btn.active { border-bottom: 2px solid #4B5563; color: #111827; font-weight: 600; }
+    .qa-card { transition: all 0.2s ease; }
+    .qa-card:hover { transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -1px rgba(0,0,0,.06); }
+  </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden">
+  <header class="bg-stone-800 text-stone-50 p-4 shadow-md z-10 flex justify-between items-center shrink-0">
+    <div class="flex items-center gap-3">
+      <span class="text-2xl">☎️</span>
+      <h1 class="text-xl md:text-2xl font-bold tracking-wider">1999 專線新進話務人員教材 <span class="text-sm font-normal text-stone-300 ml-2">❤️ 社會關懷與幸福生活篇</span></h1>
+    </div>
+    <div class="text-sm text-stone-300 hidden md:block">內部教育訓練專用系統</div>
+  </header>
 
-<html>
+  <div class="flex flex-1 overflow-hidden">
+    <aside class="w-20 md:w-64 bg-stone-100 border-r border-stone-200 flex flex-col overflow-y-auto shrink-0 transition-all duration-300">
+      <div class="p-4 text-xs font-bold text-stone-400 uppercase tracking-wider hidden md:block">業務局處分類</div>
+      <nav id="sidebar-nav" class="flex-1"></nav>
+    </aside>
 
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <main class="flex-1 flex flex-col bg-white overflow-hidden relative">
+      <div id="content-header" class="px-6 md:px-10 py-6 bg-stone-50 border-b border-stone-200 shrink-0">
+        <h2 id="dept-title" class="text-3xl font-bold text-stone-800 mb-2 flex items-center gap-3"></h2>
+        <p id="dept-intro" class="text-stone-600 max-w-4xl leading-relaxed"></p>
+      </div>
 
-    <title>Trellisheets</title>
-
-    <link rel="stylesheet" href="styles/core.css">
-
-    <script src="//use.typekit.net/lto6buh.js"></script>
-    <script>try{Typekit.load();}catch(e){}</script>
-
-  </head>
-
-  <body>
-
-    <div class="global-header mod-trello-blue mod-dark-background u-clearfix">
-
-      <div class="global-header-section mod-left">
-        <a class="global-header-section-logo" href="/">
-          <img class="global-header-section-logo-image" src="/images/trello-logo-white.svg">
-        </a>
-        <div class="global-header-section-links">
-          <a class="global-header-section-link" href="#">Tour</a>
-          <a class="global-header-section-link" href="#">Pricing</a>
-          <a class="global-header-section-link" href="#">Blog</a>
+      <div class="px-6 md:px-10 py-0 border-b border-stone-200 shrink-0 bg-white z-10">
+        <div class="flex space-x-8" id="tabs-container">
+          <button class="tab-btn active py-4 px-1 text-stone-500 hover:text-stone-800 focus:outline-none" data-tab="overview">概況與組織</button>
+          <button class="tab-btn py-4 px-1 text-stone-500 hover:text-stone-800 focus:outline-none" data-tab="core">核心業務</button>
+          <button class="tab-btn py-4 px-1 text-stone-500 hover:text-stone-800 focus:outline-none" data-tab="qa">情境模擬 Q&A</button>
         </div>
       </div>
 
-      <div class="global-header-section mod-right">
-        <a class="global-header-section-button" href="#">Log In</a>
-        <a class="global-header-section-button mod-primary" href="#">Sign Up</a>
-      </div>
-
-    </div>
-
-    <div class="page-header mod-trello-blue">
-
-      <div class="page-header-content">
-        <h1>At a glance label attachment team.</h1>
-        <p>Organize Chorizo project drag and drop real time anything Trello Gold.</p>
-      </div>
-
-      <nav class="page-header-nav">
-        <div class="page-header-nav-list">
-          <a class="page-header-nav-list-item is-active" href="/">Index</a>
-          <a class="page-header-nav-list-item" href="/elements.html">Elements</a>
-          <a class="page-header-nav-list-item" href="/blue-header-fixed.html">Fixed</a>
-          <a class="page-header-nav-list-item" href="/gray-header.html">Gray Header</a>
-          <a class="page-header-nav-list-item" href="/global-header-only.html">Global Header Only</a>
+      <div id="main-scroll-area" class="flex-1 overflow-y-auto p-6 md:p-10 bg-white">
+        <div id="tab-overview" class="tab-content block animate-fade-in">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+              <h3 class="text-xl font-bold text-stone-800 border-l-4 border-stone-500 pl-3 mb-4">宏觀脈絡與數據</h3>
+              <div class="chart-container border border-stone-100 rounded-xl p-4 shadow-sm bg-stone-50">
+                <canvas id="deptChart"></canvas>
+              </div>
+              <ul id="macro-list" class="space-y-3 text-stone-700 list-disc list-inside mt-4"></ul>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-stone-800 border-l-4 border-stone-500 pl-3 mb-4">組織架構與職掌</h3>
+              <div class="bg-stone-50 rounded-xl p-6 border border-stone-100 shadow-sm">
+                <div class="mb-4 pb-4 border-b border-stone-200">
+                  <p class="text-sm text-stone-500">首長資訊</p>
+                  <p id="director-info" class="text-lg font-bold text-stone-800 mt-1"></p>
+                </div>
+                <p class="text-sm text-stone-500 mb-3">主要科室職掌</p>
+                <div id="org-list" class="grid grid-cols-1 gap-3"></div>
+              </div>
+            </div>
+          </div>
         </div>
-      </nav>
 
-    </div>
+        <div id="tab-core" class="tab-content hidden animate-fade-in">
+          <h3 class="text-xl font-bold text-stone-800 border-l-4 border-stone-500 pl-3 mb-6">核心業務與實務應用</h3>
+          <p class="text-stone-600 mb-6 bg-blue-50 p-4 rounded-lg text-sm border border-blue-100">💡 提示：此區域列出該局處民眾最常申辦之業務。遇民眾進線詢問時，請先判定屬於下列何種業務，再依規定流程說明或轉接。</p>
+          <div id="core-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+        </div>
 
-    <div class="layout-centered">
-      <div class="layout-centered-content">
-
-      <h2>A List of Example Pages</h2>
-
-      <ul>
-
-        <li>
-          <a href="/elements.html">Elements</a>
-        </li>
-
-        <li>
-          <a href="/layouts.html">Layouts</a>
-        </li>
-
-        <li>
-          <a href="/blue-header-fixed.html">Blue Header Fixed</a>
-        </li>
-
-        <li>
-          <a href="/gray-header.html">Gray Header</a>
-        </li>
-
-        <li>
-          <a href="/global-header-only.html">Global Header Only</a>
-        </li>
-
-        <li>
-          <a href="/no-header.html">No Header</a>
-        </li>
-
-        <li>
-          <a href="/legal.html">Legal Mock-Up</a>
-        </li>
-
-      </ul>
-
-      <hr>
-
-      <h2>Team done anything list project.</h2>
-
-      <p>Trello Gold anything card Business Class real time organization with
-      anyone members checklists flexible. Trello project notifications card
-      lists stickers label anything team at a glance. Chorizo done due dates
-      label drag and drop card lists comment Trello Gold. Lists Business Class
-      visual project organize Chorizo anything label list of lists. Comment
-      board <a href="#">Trello notifications list of lists</a> stickers card
-      Business Class anything.</p>
-
-      <p>
-        <button class="mod-primary">Board</button>
-      </p>
-
-      <h2>Checklists Flexible List of Lists Team</h2>
-
-      <p>Free organize flexible card real time notifications. Organization
-      comment real time organize easy free list of lists attachment. Done due
-      dates attachment list of lists power-ups visual. List of lists with anyone
-      lists label Chorizo free card visual due dates. Organize Trello Gold
-      family and friends checklists Chorizo card power-ups. Trello Gold members
-      list Taco project board label anything Chorizo. Anything due dates
-      stickers Business Class label lists attachment. List of lists Chorizo
-      simple <a href="#">members project</a> drag and drop. Project organize
-      stickers Taco power-ups Business Class organization family and friends
-      Trello Gold.</p>
-
-      <h2>Lists Chorizo Trello Gold Card Due Dates</h2>
-
-      <p>Label stickers with anyone done notifications drag and drop card
-      anything. Team anything list of lists board notifications comment card
-      real time. Business Class notifications with anyone board organization
-      simple real time. Anything family and friends members done easy power-ups
-      stickers drag and drop Business Class. Family and friends board members
-      team checklists free Taco. Business Class lists at a glance with anyone
-      members power-ups drag and drop free card anything.</p>
-
+        <div id="tab-qa" class="tab-content hidden animate-fade-in">
+          <h3 class="text-xl font-bold text-stone-800 border-l-4 border-stone-500 pl-3 mb-6">常見問題與情境模擬 (Q&A)</h3>
+          <div id="qa-container" class="space-y-4 max-w-4xl"></div>
+        </div>
       </div>
-    </div>
+    </main>
+  </div>
 
-    <footer class="global-footer">
+  <script>
+    const appData = {
+      social: {
+        id: 'social', icon: '🤝', name: '社會局', color: '#3B82F6',
+        intro: '本區彙整桃園市政府社會局相關業務。話務人員將在此學習如何回應市民關於弱勢照顧、老人福利、身障服務及緊急社會救助等高度關懷性議題，確保市民能迅速連結社福資源。',
+        macro: ['桃園市社福現況：低收入戶約占全市人口1.5%，老年人口比例持續攀升，身心障礙者約8萬餘人。[資料來源：桃園市政府社會局官網]', '施政重點：推動長照2.0在地老化、強化社區發展協會功能、落實社會救助與安全網。[資料來源：桃園市政府社會局官網]', '年度目標：擴增公共托老中心、佈建社會福利服務中心整合平台，落實「一區一社福中心」。[資料來源：桃園市政府社會局官網]'],
+        chart: { type: 'doughnut', data: { labels: ['高齡人口(65+)', '身心障礙者', '低收/中低收入戶', '一般市民'], datasets: [{ data: [14.5, 3.8, 2.1, 79.6], backgroundColor: ['#93C5FD', '#FCA5A5', '#FCD34D', '#E5E7EB'] }] }, title: '桃園市特定福利對象人口概況估算 (%)' },
+        org: { director: '社會局局長 ⚠️ 需電話確認分機', sections: [{ name: '社會救助科', desc: '辦理低收入戶、中低收入戶審核、急難救助及災害救助事宜。' }, { name: '老人福利科', desc: '推動敬老津貼、長照服務(居家/日照)、獨居老人關懷及安養護機構管理。' }, { name: '身心障礙福利科', desc: '負責身心障礙證明核發、輔具補助、復康巴士及庇護工場業務。' }, { name: '社會工作科', desc: '處理遊民安置輔導、脆弱家庭輔導及志願服務推廣媒合。' }] },
+        core: [{ title: '低收與中低收入戶申請', desc: '指導民眾備齊戶口名簿、財稅證明等資料，至戶籍地「區公所社會課」辦理審查。[資料來源：社會局官網]' }, { title: '身心障礙證明申請', desc: '請民眾攜帶身分證、照片至戶籍地區公所領取鑑定表，再至指定醫院由醫師鑑定。[資料來源：社會局官網]' }, { title: '老人長照服務申請', desc: '有居家服務或輔具需求者，請轉接「桃園市長期照顧管理中心」或撥打長照專線 1966。[資料來源：社會局官網]' }, { title: '急難紓困申請', desc: '遇突發變故致生活陷困，可於事件發生3個月內，向居住地區公所申請緊急生活補助。[資料來源：社會局官網]' }, { title: '遊民通報', desc: '若發現街頭有疑似遊民需協助，於上班時間轉接社會工作科，夜間/假日請通報警察局(110)。[資料來源：社會局官網]' }],
+        qa: [{ q: '你好，我最近失業又生病，沒錢吃飯繳房租，請問政府有什麼補助嗎？', a: '您好，聽到您的狀況很辛苦。若您近期遭遇突發變故導致生活困難，您可以攜帶身分證及相關證明，就近向您【居住地的區公所社會課】申請「急難紓困」。若您目前有非常緊急的物資需求，我可以為您轉接社會局【社會救助科】，請社工進一步協助您。' }, { q: '我爸爸中風出院回家，我們白天都要上班沒人照顧他，有什麼服務可以申請？', a: '您好，您可以申請「長期照顧服務」。這包含居家服務員到家裡幫忙洗澡、備餐，或安排長輩去日間照顧中心。您可以直接撥打免付費專線【1966】。' }, { q: '我看到火車站地下道有一個阿伯睡在紙箱上，天氣很冷，你們可以去看看嗎？', a: '您好，感謝您的熱心通報。請問您具體看到他的位置在哪個出口或通道？我會立即通報社會局【外展社工中心】派員前往關懷。' }]
+      },
+      labor: {
+        id: 'labor', icon: '👷', name: '勞動局', color: '#F97316',
+        intro: '本區彙整桃園市政府勞動局相關業務。桃園為工業大市，勞工人口眾多。話務人員需熟悉勞資糾紛調解、欠薪處理、就業媒合及外籍移工諮詢等流程。',
+        macro: ['桃園市為全國工業產值最高縣市，且為全國外籍移工人數最多之縣市之一。[資料來源：勞動局官網]', '施政重點：促進勞資和諧、強化職業安全衛生檢查、推動多元就業與青年職訓。[資料來源：勞動局官網]', '年度目標：降低重大職災發生率、提升就業媒合成功率，並加強移工宿舍公安稽查。[資料來源：勞動局官網]'],
+        chart: { type: 'bar', data: { labels: ['工資爭議', '資遣費爭議', '職災補償', '工時休假', '其他'], datasets: [{ label: '案件比例 (%)', data: [45, 25, 10, 15, 5], backgroundColor: '#FDBA74' }] }, title: '年度勞資爭議調解案件大宗類型' },
+        org: { director: '勞動局局長 ⚠️ 需電話確認分機', sections: [{ name: '勞資關係科', desc: '受理勞資爭議調解、大量解僱通報、工會籌組輔導。' }, { name: '勞動條件科', desc: '執行勞動基準法稽查、受理勞工申訴。' }, { name: '就業職訓服務處', desc: '辦理求職求才媒合、失業給付認定、各類職業訓練課程規劃。' }, { name: '勞動檢查處', desc: '辦理工作場所安全衛生檢查、職業災害調查及申訴處理。' }] },
+        core: [{ title: '勞資爭議調解申請', desc: '遇工資未給、違法解僱等，可至勞動局官網下載申請書，或親至市府勞動局辦理調解。[資料來源：勞動局官網]' }, { title: '失業給付認定', desc: '請攜帶身分證及非自願離職證明，親至桃園或中壢就業中心辦理。[資料來源：勞動局官網]' }, { title: '外籍移工申訴', desc: '移工可直接撥打勞動部【1955】24小時免付費多語諮詢專線。[資料來源：勞動局官網]' }],
+        qa: [{ q: '老闆已經兩個月沒發薪水了，避不見面，我該怎麼辦？', a: '您好，遇到欠薪狀況，建議您盡快申請【勞資爭議調解】。我也可以先幫您轉接【勞資關係科】了解詳細程序。' }, { q: '公司每天要求提早15分鐘開早會，而且不給加班費，合法嗎？', a: '您好，雇主若要求勞工於正常工作時間外開會，該時段應計入工作時間。若您欲檢舉，請提供公司確切名稱、地址及違規事實。' }, { q: '我是外籍移工，雇主沒發薪水。', a: '您好，移工勞資爭議請直接撥打免付費專線【1955】，提供24小時多語服務。' }]
+      },
+      civil: {
+        id: 'civil', icon: '🏛️', name: '民政局', color: '#10B981',
+        intro: '本區彙整桃園市政府民政局相關業務。話務人員需熟悉戶籍異動、身分證件辦理、兵役徵集及殯葬設施申請等便民服務流程。',
+        macro: ['桃園市人口持續正成長，已突破230萬人，共設有13區戶政事務所提供在地服務。[資料來源：民政局官網]', '施政重點：推動戶政跨機關便民服務、役男關懷與權益保障、綠色環保殯葬。[資料來源：民政局官網]', '全市設有500多個里辦公處，里長為基層反映民意之重要橋樑。[資料來源：民政局官網]'],
+        chart: { type: 'bar', data: { labels: ['桃園區', '中壢區', '平鎮區', '八德區', '楊梅區'], datasets: [{ label: '人口 (萬人) 估計', data: [46, 42, 22, 21, 17], backgroundColor: '#6EE7B7' }] }, title: '主要行政區人口分佈概況', indexAxis: 'y' },
+        org: { director: '民政局局長 ⚠️ 需電話確認分機', sections: [{ name: '戶政科', desc: '督導戶籍登記、國籍歸化、身分證及門牌編釘業務。' }, { name: '兵役科', desc: '辦理役男兵籍調查、體檢、抽籤、徵集入營及替代役管理。' }, { name: '禮儀事務科', desc: '督導殯葬管理所與公立殯葬設施。' }, { name: '自治行政科', desc: '辦理里鄰長業務、區政監督、地方選舉業務。' }] },
+        core: [{ title: '戶籍遷入登記', desc: '申請人須攜帶遷入地戶口名簿、身分證、印章及房屋證明文件，至遷入地戶所辦理。[資料來源：民政局官網]' }, { title: '身分證掛失與補發', desc: '遺失時可先撥打 1996 掛失；補發須本人親至任一戶所辦理。[資料來源：民政局官網]' }, { title: '役男出境申請', desc: '19歲起役男未服役前出國，須至役政署線上申請系統辦理核准。[資料來源：民政局官網]' }],
+        qa: [{ q: '我剛買房子要遷戶口，要去哪裡辦？', a: '您好，請攜帶身分證及印章、遷入地戶口名簿、房屋所有權狀等文件，前往【遷入地戶政事務所】辦理。' }, { q: '身分證不見了怎麼辦？', a: '您好，建議您立刻撥打內政部24小時專線【1996】辦理掛失，之後本人到任一戶政事務所補發。' }, { q: '19歲役男暑假想出國，兵役會有問題嗎？', a: '您好，19歲含以上役男未服役前出國須事先申請，請使用內政部役政署【役男短期出境線上申請】。' }]
+      },
+      sports: {
+        id: 'sports', icon: '⚽', name: '體育局', color: '#EF4444',
+        intro: '本區彙整桃園市政府體育局相關業務。話務人員將處理運動場館租借、國民運動中心課程、體育活動補助及賽事資訊等詢問。',
+        macro: ['桃園市已啟用多座國民運動中心及各區天幕球場、體育園區。[資料來源：體育局官網]', '施政重點：完善運動場館設施、推廣全民體育活動、培育競技運動基層選手。[資料來源：體育局官網]', '年度目標：持續興建與優化各區體育設施，爭取舉辦大型體育賽事。[資料來源：體育局官網]'],
+        chart: { type: 'line', data: { labels: ['1月', '3月', '5月', '7月', '9月', '11月'], datasets: [{ label: '平均入館人次趨勢 (估計)', data: [120, 150, 180, 250, 190, 160], borderColor: '#F87171', tension: 0.3, fill: false }] }, title: '年度運動中心使用熱度趨勢' },
+        org: { director: '體育局局長 ⚠️ 需電話確認分機', sections: [{ name: '運動設施科', desc: '辦理市有體育場館興建、整修、委外營運督導與設施修繕。' }, { name: '全民運動科', desc: '推廣社會體育、辦理市民運動會及體育活動補助。' }, { name: '競技運動科', desc: '選手培訓、獎勵金核發及賽事承辦。' }, { name: '桃園市立體育場', desc: '負責大型場館日常管理與借用審查。' }] },
+        core: [{ title: '國民運動中心課程與設施', desc: '課程報名與場地租借請民眾直接洽詢各中心官網或服務台。[資料來源：體育局官網]' }, { title: '大型體育場館借用', desc: '借用巨蛋體育館或市立田徑場須提前向桃園市立體育場提出申請。[資料來源：體育局官網]' }, { title: '戶外球場損壞通報', desc: '請確認具體地點，透過1999系統派發至體育局或各區公所處理。[資料來源：體育局官網]' }],
+        qa: [{ q: '我想報名國民運動中心游泳課，要在哪裡報名？', a: '您好，課程報名或場地預約，請直接至該【國民運動中心】官方網站線上報名，或到服務台辦理。' }, { q: '社區想辦健走活動，可以申請補助嗎？', a: '您好，合法立案民間團體可依規定申請補助，可至體育局官網下載表單，或轉接【全民運動科】。' }, { q: '公園籃球場籃網破了、燈不亮，可以修嗎？', a: '您好，請提供球場所在區域、道路或公園名稱，我會立案通報【體育局或轄區區公所】檢修。' }]
+      },
+      women: {
+        id: 'women', icon: '👩‍👧‍👦', name: '婦幼局', color: '#A855F7',
+        intro: '本區彙整桃園市政府婦幼局相關業務。此局處處理高度敏感且緊急之議題，話務人員務必熟記 113 保護專線分工。',
+        macro: ['桃園市成立婦幼發展局，整合婦女、兒童及青少年福利與保護業務。[資料來源：桃園市政府]', '施政重點：家暴及性侵害防治、擴大公共托育量能、推動性別平等與單親家庭支持。[資料來源：婦幼局官網]', '保護網絡結合警政、社政、衛政及教育單位，提供被害人緊急救援與庇護。[資料來源：家防中心]'],
+        chart: { type: 'pie', data: { labels: ['親密關係暴力', '兒少保護', '家屬間暴力', '性侵害事件'], datasets: [{ data: [48, 30, 15, 7], backgroundColor: ['#D8B4FE', '#FBCFE8', '#E9D5FF', '#C084FC'] }] }, title: '家庭暴力防治中心通報案件類型佔比' },
+        org: { director: '婦幼局局長 ⚠️ 需電話確認分機', sections: [{ name: '家庭暴力暨性侵害防治中心', desc: '【高度緊急】處理家暴、兒虐、性侵害事件緊急救援與安置。' }, { name: '幼兒托育科', desc: '辦理0-2歲托育補助、公共托嬰中心、保母登記與管理。' }, { name: '婦女發展及權益科', desc: '推動婦女培力、性別平等、新住民及單親家庭支持。' }, { name: '兒少福利科', desc: '辦理育兒津貼、兒童及青少年福利服務據點管理。' }] },
+        core: [{ title: '家暴/兒虐緊急通報', desc: '遇緊急生命危險請民眾直撥 110；家暴/兒虐通報求助應線上立即轉接 113 或家防中心。[資料來源：婦幼局/家防中心]' }, { title: '0-2歲托育補助', desc: '送托準公共化保母或私立托嬰中心，可由保母或機構協助提出補助申請。[資料來源：婦幼局官網]' }, { title: '特殊境遇家庭扶助', desc: '獨自扶養子女且生活困難者，可向區公所申請緊急生活扶助或子女生活津貼。[資料來源：婦幼局官網]' }],
+        qa: [{ q: '救命！我老公拿刀在撞房門！', a: '【緊急處置】請保持冷靜並確保房門鎖好。我現在幫您線上三方通話直接轉接警察局【110】，請不要掛斷電話。' }, { q: '隔壁每天晚上都傳來打小孩聲音，可以報警嗎？', a: '您好，兒少保護刻不容緩。您可以直接撥打全國保護專線【113】，或我現在幫您轉接【桃園市家庭暴力防治中心】。' }, { q: '請有證照保母帶小孩，托育補助怎麼申請？', a: '您好，只要保母加入準公共化機制，簽約後可請【保母】協助送件至居家托育服務中心代辦。' }]
+      }
+    };
 
-      <ul class="global-footer-list">
+    let currentDeptId = 'social';
+    let currentTabId = 'overview';
+    let currentChartInstance = null;
 
-        <li class="global-footer-list-item">
-          <a class="global-footer-list-item-link" href="/">List</a>
-        </li>
+    function renderNavigation() {
+      const navContainer = document.getElementById('sidebar-nav');
+      navContainer.innerHTML = Object.entries(appData).map(([id, dept]) => `
+        <button class="nav-item w-full text-left px-6 py-4 border-b border-stone-200 hover:bg-stone-200 focus:outline-none transition-colors flex items-center gap-3 text-stone-700 ${id === currentDeptId ? 'active' : ''}" data-dept="${id}">
+          <span class="text-xl w-6 text-center">${dept.icon}</span>
+          <span class="hidden md:inline">${dept.name}</span>
+        </button>
+      `).join('');
+    }
 
-        <li class="global-footer-list-item">
-          <a class="global-footer-list-item-link" href="/">Anyone</a>
-        </li>
+    function switchDepartment(id) {
+      currentDeptId = id;
+      renderNavigation();
+      switchTab('overview');
+      renderContent();
+      document.getElementById('main-scroll-area').scrollTop = 0;
+    }
 
-        <li class="global-footer-list-item">
-          <a class="global-footer-list-item-link" href="/">Taco</a>
-        </li>
+    function switchTab(tabId) {
+      currentTabId = tabId;
+      document.querySelectorAll('.tab-btn').forEach((btn) => btn.classList.toggle('active', btn.dataset.tab === tabId));
+      document.querySelectorAll('.tab-content').forEach((content) => {
+        const isCurrent = content.id === `tab-${tabId}`;
+        content.classList.toggle('hidden', !isCurrent);
+        content.classList.toggle('block', isCurrent);
+      });
+      if (tabId === 'overview') renderChart();
+    }
 
-        <li class="global-footer-list-item">
-          <a class="global-footer-list-item-link" href="/">Power-Ups</a>
-        </li>
+    function renderContent() {
+      const data = appData[currentDeptId];
+      document.getElementById('dept-title').innerHTML = `<span style="color: ${data.color};">${data.icon}</span> ${data.name} <span class="text-lg font-normal text-stone-500 bg-stone-200 px-2 py-1 rounded ml-2">實務教戰手冊</span>`;
+      document.getElementById('dept-intro').innerText = data.intro;
+      document.getElementById('macro-list').innerHTML = data.macro.map((item) => `<li>${item.replace(/\[資料來源：(.*?)\]/g, '<span class="text-xs text-stone-400 bg-stone-100 px-1 rounded ml-1 block mt-1 sm:inline sm:mt-0">[$1]</span>')}</li>`).join('');
+      document.getElementById('director-info').innerHTML = data.org.director.replace('⚠️', '<span class="text-amber-500">⚠️</span>');
+      document.getElementById('org-list').innerHTML = data.org.sections.map((sec) => `
+        <div class="bg-white p-3 rounded border border-stone-200">
+          <div class="font-bold text-stone-700">${sec.name}</div>
+          <div class="text-sm text-stone-500 mt-1">${sec.desc}</div>
+        </div>
+      `).join('');
+      document.getElementById('core-grid').innerHTML = data.core.map((item, index) => `
+        <div class="bg-white border border-stone-200 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
+          <div class="absolute top-0 left-0 w-1 h-full" style="background-color: ${data.color}; opacity: .35;"></div>
+          <div class="font-bold text-lg text-stone-800 mb-2">${index + 1}. ${item.title}</div>
+          <p class="text-stone-600 leading-relaxed">${item.desc.replace(/\[資料來源：(.*?)\]/g, '<br><span class="text-xs text-stone-400 mt-2 inline-block">[$1]</span>')}</p>
+        </div>
+      `).join('');
+      document.getElementById('qa-container').innerHTML = data.qa.map((item, index) => `
+        <div class="qa-card bg-white border border-stone-200 rounded-xl overflow-hidden cursor-pointer" data-qa-card>
+          <div class="p-4 bg-stone-50 flex justify-between items-start">
+            <div class="flex gap-3"><span class="text-stone-400 font-bold mt-0.5">Q${index + 1}</span><p class="font-bold text-stone-800 text-lg">【市民問】${item.q}</p></div>
+            <span class="chevron transform transition-transform duration-200 text-stone-400">▼</span>
+          </div>
+          <div class="answer-block hidden p-4 border-t border-stone-100 bg-white">
+            <div class="flex gap-3"><span class="font-bold mt-0.5" style="color: ${data.color}">Ans</span><p class="text-stone-700 leading-relaxed">【話務員答】${item.a.replace(/【(.*?)】/g, `<strong style="color: ${data.color}; background-color: ${data.color}15; padding: 0 4px; border-radius: 4px;">$1</strong>`)}</p></div>
+          </div>
+        </div>
+      `).join('');
+      if (currentTabId === 'overview') renderChart();
+    }
 
-        <li class="global-footer-list-item">
-          <a class="global-footer-list-item-link" href="/">Labels</a>
-        </li>
+    function renderChart() {
+      const chartConfig = appData[currentDeptId].chart;
+      const canvas = document.getElementById('deptChart');
+      if (!canvas || !window.Chart) return;
+      const ctx = canvas.getContext('2d');
+      if (currentChartInstance) currentChartInstance.destroy();
+      Chart.defaults.font.family = "'PingFang TC', 'Microsoft JhengHei', sans-serif";
+      Chart.defaults.color = '#57534E';
+      currentChartInstance = new Chart(ctx, {
+        type: chartConfig.type,
+        data: chartConfig.data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          indexAxis: chartConfig.indexAxis,
+          plugins: {
+            legend: { position: chartConfig.type === 'pie' || chartConfig.type === 'doughnut' ? 'right' : 'top' },
+            title: { display: true, text: chartConfig.title, font: { size: 16, weight: 'bold' } },
+            tooltip: { callbacks: { label(context) { const rawValue = context.parsed?.y ?? context.parsed; return `${context.dataset.label ? `${context.dataset.label}: ` : ''}${rawValue}${chartConfig.type === 'pie' || chartConfig.type === 'doughnut' ? '%' : ''}`; } } }
+          }
+        }
+      });
+    }
 
-        <li class="global-footer-list-item">
-          <a class="global-footer-list-item-link" href="/">Checklists</a>
-        </li>
+    document.getElementById('sidebar-nav').addEventListener('click', (event) => {
+      const button = event.target.closest('[data-dept]');
+      if (button) switchDepartment(button.dataset.dept);
+    });
+    document.querySelectorAll('.tab-btn').forEach((btn) => btn.addEventListener('click', () => switchTab(btn.dataset.tab)));
+    document.getElementById('qa-container').addEventListener('click', (event) => {
+      const card = event.target.closest('[data-qa-card]');
+      if (!card) return;
+      card.querySelector('.answer-block').classList.toggle('hidden');
+      card.querySelector('.chevron').classList.toggle('rotate-180');
+    });
 
-      </ul>
-
-      <p class="global-footer-detail">© Copyright 2015, Notifications. Visual Real Time.</p>
-
-    </footer>
-
-  </body>
-
+    renderNavigation();
+    switchDepartment('social');
+  </script>
+</body>
 </html>
